@@ -1,5 +1,7 @@
 node_modules/
 dist/
+dist-electron/
+out/
 src-tauri/target/
 
 # ローカルデータ・秘密情報
