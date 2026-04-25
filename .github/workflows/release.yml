@@ -47,4 +47,3 @@ jobs:
             - **Windows**: `.msi` または `.exe` をダウンロードしてインストール
           releaseDraft: false
           prerelease: false
-          tauriScript: npm run build

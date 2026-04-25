@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "tauri dev",
     "build": "tauri build",
+    "tauri": "tauri",
     "dev:renderer": "vite",
     "build:renderer": "vite build"
   },
