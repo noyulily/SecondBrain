@@ -1,0 +1,17 @@
+node_modules/
+dist/
+src-tauri/target/
+
+# ローカルデータ・秘密情報
+*.db
+*.db-wal
+*.db-shm
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite
+.vite/
