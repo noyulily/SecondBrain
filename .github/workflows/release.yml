@@ -12,7 +12,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, windows-latest]
+        include:
+          - platform: macos-latest
+            args: '--target universal-apple-darwin'
+          - platform: windows-latest
+            args: ''
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -23,8 +27,10 @@ jobs:
         with:
           node-version: 20
 
-      - name: Setup Rust
+      - name: Setup Rust (with universal target on macOS)
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Rust cache
         uses: Swatinem/rust-cache@v2
@@ -43,7 +49,15 @@ jobs:
           releaseName: Second Brain ${{ github.ref_name }}
           releaseBody: |
             ## ダウンロード
-            - **Mac**: `.dmg` ファイルをダウンロードしてインストール
+            - **Mac**: `.dmg` ファイルをダウンロードしてインストール（Intel/Apple Silicon両対応）
             - **Windows**: `.msi` または `.exe` をダウンロードしてインストール
+
+            ### Macで「開発元を確認できないため開けません」と出る場合
+            初回起動時はFinderで `.app` を **右クリック → 開く** を選択してください。
+            または、ターミナルで以下を実行：
+            ```
+            xattr -cr /Applications/Second\ Brain.app
+            ```
           releaseDraft: false
           prerelease: false
+          args: ${{ matrix.args }}
